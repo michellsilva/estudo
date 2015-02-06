@@ -8,3 +8,4 @@ Keep a Changelog, and this project adheres to semantic versioning.
 ### Added
 
 - Readers for three offline export kinds: application logs, a metric series with
+  a declared threshold, and a deploy record. Each event carries its source file
