@@ -11,3 +11,4 @@ Keep a Changelog, and this project adheres to semantic versioning.
   a declared threshold, and a deploy record. Each event carries its source file
   and line span.
 - Clock alignment against a declared reference clock, with per source offset and
+  linear skew anchored at a chosen instant.
