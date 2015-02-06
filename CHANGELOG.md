@@ -7,3 +7,4 @@ Keep a Changelog, and this project adheres to semantic versioning.
 
 ### Added
 
+- Readers for three offline export kinds: application logs, a metric series with
