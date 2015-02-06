@@ -12,3 +12,5 @@ Keep a Changelog, and this project adheres to semantic versioning.
   and line span.
 - Clock alignment against a declared reference clock, with per source offset and
   linear skew anchored at a chosen instant.
+- Windowed correlation between deploys, metric breach intervals, and log error
+  bursts, plus rollback to recovery detection.
