@@ -15,3 +15,4 @@ Keep a Changelog, and this project adheres to semantic versioning.
 - Windowed correlation between deploys, metric breach intervals, and log error
   bursts, plus rollback to recovery detection.
 - An ordered timeline model measured in minutes from the first event.
+- A postmortem draft writer where every statement cites the exact source span it
