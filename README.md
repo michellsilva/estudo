@@ -71,3 +71,14 @@ set PYTHONPATH=src
 python -m postmortemforge version
 ```
 
+That prints:
+
+```
+$ python -m postmortemforge version
+postmortemforge 0.1.0
+```
+
+## Commands
+
+Four subcommands, all reading the same three sources plus an alignment config.
+
