@@ -117,3 +117,14 @@ Rules that hold across all three:
 The metric reader models a single scalar series with one threshold and one direction. On
 each data point it records the value and whether it breached, so correlation can later
 find the breach window without re-reading the file.
+
+## Clock alignment
+
+Before events from different sources can be compared, they must be projected onto one
+reference clock. Each source clock is modelled as a linear map:
+
+```
+reference_ts = raw_ts + offset + skew * (raw_ts - anchor)
+```
+
+- `offset` is a constant shift in seconds: the source clock is ahead or behind.
