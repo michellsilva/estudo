@@ -128,3 +128,15 @@ reference_ts = raw_ts + offset + skew * (raw_ts - anchor)
 ```
 
 - `offset` is a constant shift in seconds: the source clock is ahead or behind.
+- `skew` is a rate error in seconds per second: the source clock runs fast or slow. It
+  multiplies the elapsed time since a per source `anchor`, so a small rate error
+  accumulates over the window instead of applying uniformly.
+- `anchor` is the raw timestamp at which the source was last known to agree with the
+  reference. Anchoring keeps the correction numerically small and makes the offset the
+  pure shift at the anchor instant. `anchor=first` anchors at the source's own earliest
+  raw sample.
+
+The maps are declared, not inferred. postmortemforge applies the offsets an operator
+provides (from NTP records, a known deploy marker, and so on); it does not estimate them
+from the data. The sample `align.txt` declares:
+
