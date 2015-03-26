@@ -163,3 +163,14 @@ That projected time, `2026-03-01T08:05:06Z`, is asserted exactly in the test and
 verbatim in the `ingest` output below for `samples/metric.txt:15`. At the anchor itself
 only the offset applies, so the first metric sample projects to `08:00:00Z`, and the log
 host's first line (raw `07:59:20`) projects to `08:00:05Z`.
+
+`ingest` reads all three sources and lists every event on the reference clock with its
+source span. This is the captured output from the sample fixtures:
+
+```
+$ python -m postmortemforge ingest --logs samples/logs.txt --metric samples/metric.txt --deploy samples/deploy.txt --align samples/align.txt
+2026-03-01T08:00:00Z  deploy   samples/deploy.txt:3  deploy v2.4.1
+2026-03-01T08:00:00Z  metric   samples/metric.txt:5  latency_p99_ms=210ms
+2026-03-01T08:00:05Z  log      samples/logs.txt:4    service started build=v2.4.1
+2026-03-01T08:00:30Z  metric   samples/metric.txt:6  latency_p99_ms=235ms
+2026-03-01T08:01:01Z  metric   samples/metric.txt:7  latency_p99_ms=470ms
