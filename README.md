@@ -140,3 +140,14 @@ The maps are declared, not inferred. postmortemforge applies the offsets an oper
 provides (from NTP records, a known deploy marker, and so on); it does not estimate them
 from the data. The sample `align.txt` declares:
 
+```
+deploy offset=0 skew=0 anchor=first
+log offset=45 skew=0 anchor=first
+metric offset=-90 skew=0.02 anchor=first
+```
+
+So in the sample the deploy record is the reference, the log host runs 45 seconds behind
+(add 45), and the metric exporter runs 90 seconds ahead (subtract 90) while drifting fast
+at 0.02 seconds per second, anchored at its first sample.
+
+The skew is not decorative. The test `TestSampleAlignment` projects a real metric sample
