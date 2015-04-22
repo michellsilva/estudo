@@ -243,3 +243,15 @@ The three links, with the real gaps the tool measured:
 | `deploy_to_breach`     | deploy v2.4.1       | first breach sample  | 61s   | The metric crossed 400ms 61s after the deploy.                    |
 | `deploy_to_burst`      | deploy v2.4.1       | first ERROR log      | 155s  | The error burst began 155s after the deploy.                      |
 | `rollback_to_recovery` | rollback v2.4.0     | last breach sample   | 23s   | The metric dropped below threshold within 23s of the rollback.    |
+
+The `rollback_to_recovery` arrow points backward in minutes (`T+6.0m -> T+5.6m`) because
+the last breached sample is at T+5.6, just before the rollback at T+6.0; the gap is the
+absolute distance, 23 seconds. The correlator allows the recovery endpoint to fall
+either side of the rollback within the window, which is why a breach ending slightly
+before the rollback still counts as the recovery it enabled.
+
+## Grounded claims
+
+The draft writer emits only `Claim` objects, and a `Claim` cannot be constructed without
+at least one `Provenance`. The guarantee is enforced in the type's `__post_init__`:
+
