@@ -255,3 +255,14 @@ before the rollback still counts as the recovery it enabled.
 The draft writer emits only `Claim` objects, and a `Claim` cannot be constructed without
 at least one `Provenance`. The guarantee is enforced in the type's `__post_init__`:
 
+```python
+def __post_init__(self) -> None:
+    if not self.sources:
+        raise UngroundedStatement(f"claim has no source span: {self.text!r}")
+```
+
+Because the renderer only ever prints `Claim`s, and a `Claim` cannot exist without a
+source span, no ungrounded sentence can reach the page. There is no code path that
+formats a bare string into the draft body. This is verified two ways in the tests:
+`test_claim_requires_a_source` asserts that building `Claim("...", tuple())` raises
+`UngroundedStatement`, and `test_every_rendered_claim_line_has_a_citation` asserts every
