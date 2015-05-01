@@ -266,3 +266,15 @@ source span, no ungrounded sentence can reach the page. There is no code path th
 formats a bare string into the draft body. This is verified two ways in the tests:
 `test_claim_requires_a_source` asserts that building `Claim("...", tuple())` raises
 `UngroundedStatement`, and `test_every_rendered_claim_line_has_a_citation` asserts every
+`- ` line in a real rendered draft contains a `[path:line]` citation.
+
+What this guarantees about the draft: if a claim would require a fact the evidence does
+not contain, the writer omits it rather than hedging it. A section with no grounded
+claims renders the explicit note `(no statement could be grounded in a source span)`
+instead of narrative. You never read a sentence you cannot trace.
+
+## A worked run producing the draft
+
+`draft` writes the cited postmortem. This is the full captured output from the sample
+fixtures, verbatim:
+
