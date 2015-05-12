@@ -289,3 +289,14 @@ $ python -m postmortemforge draft --logs samples/logs.txt --metric samples/metri
 - A burst of 5 error log lines ran from T+2.6 to T+4.4 min. [samples/logs.txt:7, samples/logs.txt:11]
 
 ## Timeline
+- T+0.0 min (2026-03-01T08:00:00Z) deploy: deploy v2.4.1 [samples/deploy.txt:3]
+- T+0.0 min (2026-03-01T08:00:00Z) metric: latency_p99_ms=210ms [samples/metric.txt:5]
+- T+0.1 min (2026-03-01T08:00:05Z) log: service started build=v2.4.1 [samples/logs.txt:4]
+- ... (one cited line per event, 28 in all; elided here for length)
+- T+8.4 min (2026-03-01T08:08:25Z) log: request served status=200 [samples/logs.txt:15]
+
+## Contributing cause
+- The deploy of v2.4.1 was followed 61 s later by latency_p99_ms crossing its threshold. [samples/deploy.txt:3, samples/metric.txt:7]
+- The deploy of v2.4.1 was followed 155 s later by the start of an error burst. [samples/deploy.txt:3, samples/logs.txt:7]
+
+## Resolution
