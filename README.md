@@ -312,3 +312,14 @@ this: `read_logs` parsed five lines with level `ERROR` (lines 7 to 11 of `logs.t
 each carrying its own provenance. `clockalign` projected them 45 seconds forward onto
 the reference clock. `error_bursts` grouped them into one run of five because each was
 within 60 seconds of the last. `build_draft` bounded the burst by its first and last
+error and cited exactly those two spans. Nothing in that chain was invented; every step
+either read a file or applied the declared offset.
+
+## Reading the timeline asset
+
+The hero image at the top of this page is the `timeline --svg` render of the sample
+incident. It is worth reading closely, because colour and size carry meaning rather than
+decoration. It shows:
+
+- Three lanes on a shared minute axis measured from the first event: deploy on top,
+  metric in the middle, logs at the foot.
