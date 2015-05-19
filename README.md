@@ -335,3 +335,14 @@ decoration. It shows:
   at or above the 470ms breach onset.
 
 Regenerate it at any time with:
+
+```
+python -m postmortemforge timeline --logs samples/logs.txt --metric samples/metric.txt --deploy samples/deploy.txt --align samples/align.txt --svg docs/assets/incident-timeline.svg
+```
+
+## Output format
+
+The `draft` output is a contract. Each section is a Markdown `##` heading followed by
+grounded claim lines, and each claim line has this shape:
+
+```
