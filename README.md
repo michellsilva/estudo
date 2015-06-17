@@ -369,3 +369,15 @@ determinism is asserted by `test_draft_is_byte_identical_across_runs`.
 | 1    | Findings present: `ingest` produced events, or `timeline`/`draft` found links  |
 | 2    | Usage error: a bad path, an unparseable source, or an invalid argument         |
 
+In CI, treat exit 1 as "an incident was reconstructed" rather than as failure. A missing
+input file or a malformed timestamp surfaces as exit 2 with an `error:` line on stderr,
+which is the code to gate a pipeline on. The sample commands above all exit 1 because the
+sample incident has both events and links.
+
+## Limitations
+
+- Clock models are declared, not inferred. The tool applies the offset and skew you
+  provide; it does not estimate them from the data. A wrong offset produces a confidently
+  wrong timeline.
+- Correlation is proximity within a window, not proof of causation. A link means two
+  events fell close in aligned time, and the draft says exactly that ("was followed 61 s
