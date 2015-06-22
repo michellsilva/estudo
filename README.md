@@ -392,3 +392,15 @@ sample incident has both events and links.
 
 ## Design decisions
 
+**Provenance is structural, not a convention.** The alternative was to append citations
+by convention: format each sentence, then tack a `[span]` on the end, trusting every code
+path to remember. Conventions rot. The first refactor that adds a summary line without a
+citation ships an ungrounded claim, and nothing catches it. Instead a `Claim` refuses to
+exist without a `Provenance`, so an ungrounded statement is a construction error, not a
+review comment. The cost is that every fact must be threaded with its source events
+through every layer, which is more plumbing; the benefit is that the guarantee holds by
+construction and is checked by the type system and the tests, not by vigilance.
+
+**The draft omits ungrounded statements instead of hedging them.** The tempting
+alternative is to write the narrative a human expects, softened with "likely" or
+"possibly" where the evidence is thin. That reads well and quietly destroys trust,
