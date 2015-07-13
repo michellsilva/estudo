@@ -415,3 +415,15 @@ assumption inside a computation, and when it is wrong it is wrong invisibly. Dec
 offset in `align.txt` keeps the assumption in the open where a reviewer can challenge it,
 and makes the alignment a plain, auditable affine transform.
 
+## Repository layout
+
+```
+postmortemforge/
+  README.md                        this file
+  CHANGELOG.md                     Keep a Changelog history, currently 0.1.0
+  LICENSE                          MIT
+  pyproject.toml                   package metadata, entry point, Python >=3.11
+  .gitignore                       ignores caches and build artifacts
+  docs/
+    assets/
+      incident-timeline.svg        the hero timeline render (sample incident)
