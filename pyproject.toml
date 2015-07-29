@@ -5,3 +5,5 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "postmortemforge"
 version = "0.1.0"
+description = "Reconstruct an incident timeline from exported evidence and draft a cited postmortem."
+readme = "README.md"
