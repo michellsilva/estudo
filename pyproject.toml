@@ -9,3 +9,5 @@ description = "Reconstruct an incident timeline from exported evidence and draft
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
+authors = [{ name = "Michel Silva" }]
+keywords = ["incident", "postmortem", "timeline", "provenance"]
