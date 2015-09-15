@@ -48,3 +48,8 @@ class AlignedEvent:
     (logs, metric, deploy). event carries the original record, including its
     provenance and untouched raw_ts, so nothing observed is lost.
     """
+
+    ref_ts: float
+    source: str
+    event: Event
+
