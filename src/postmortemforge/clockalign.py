@@ -39,3 +39,8 @@ class ClockModel:
         """Project a raw source timestamp onto the reference timeline."""
         return raw_ts + self.offset_s + self.skew_s_per_s * (raw_ts - self.anchor_ts)
 
+
+@dataclass(frozen=True)
+class AlignedEvent:
+    """An Event whose timestamp has been projected onto the reference clock.
+
