@@ -29,3 +29,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .clockalign import AlignedEvent
+
+
+@dataclass(frozen=True)
+class Interval:
+    """A closed time interval on the reference clock, with its bounding events."""
+
+    start_ts: float
