@@ -37,3 +37,11 @@ class Interval:
     """A closed time interval on the reference clock, with its bounding events."""
 
     start_ts: float
+    end_ts: float
+    start_event: AlignedEvent
+    end_event: AlignedEvent
+
+
+@dataclass(frozen=True)
+class Burst:
+    """A run of error log events on the reference clock."""
