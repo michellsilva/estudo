@@ -68,3 +68,11 @@ class Link:
     cause: AlignedEvent
     effect: AlignedEvent
     gap_s: float
+
+
+def deploy_events(events: list[AlignedEvent]) -> list[AlignedEvent]:
+    """Return deploy-source events in reference-clock order."""
+    return [e for e in events if e.source == "deploy"]
+
+
+def breach_intervals(events: list[AlignedEvent], break_gap_s: float = 120.0) -> list[Interval]:
