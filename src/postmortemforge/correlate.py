@@ -76,3 +76,10 @@ def deploy_events(events: list[AlignedEvent]) -> list[AlignedEvent]:
 
 
 def breach_intervals(events: list[AlignedEvent], break_gap_s: float = 120.0) -> list[Interval]:
+    """Find metric breach intervals from breached metric samples.
+
+    Consecutive breached samples belong to the same interval unless separated by
+    more than break_gap_s, which starts a new one.
+    """
+    breached = [e for e in events if e.source == "metric" and e.event.attrs.get("breached")]
+    breached.sort(key=lambda e: e.ref_ts)
