@@ -83,3 +83,11 @@ def breach_intervals(events: list[AlignedEvent], break_gap_s: float = 120.0) -> 
     """
     breached = [e for e in events if e.source == "metric" and e.event.attrs.get("breached")]
     breached.sort(key=lambda e: e.ref_ts)
+    intervals: list[Interval] = []
+    run: list[AlignedEvent] = []
+    for ev in breached:
+        if run and ev.ref_ts - run[-1].ref_ts > break_gap_s:
+            intervals.append(Interval(run[0].ref_ts, run[-1].ref_ts, run[0], run[-1]))
+            run = []
+        run.append(ev)
+    if run:
