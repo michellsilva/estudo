@@ -99,3 +99,11 @@ def error_bursts(
     events: list[AlignedEvent], burst_gap_s: float = 60.0, min_burst: int = 3
 ) -> list[Burst]:
     """Find bursts of ERROR level log events.
+
+    A burst is a run of errors where each is within burst_gap_s of the previous,
+    containing at least min_burst errors.
+    """
+    errors = [
+        e
+        for e in events
+        if e.source == "log" and e.event.attrs.get("level") == "ERROR"
