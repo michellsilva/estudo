@@ -107,3 +107,11 @@ def error_bursts(
         e
         for e in events
         if e.source == "log" and e.event.attrs.get("level") == "ERROR"
+    ]
+    errors.sort(key=lambda e: e.ref_ts)
+    bursts: list[Burst] = []
+    run: list[AlignedEvent] = []
+    for ev in errors:
+        if run and ev.ref_ts - run[-1].ref_ts > burst_gap_s:
+            _flush_burst(run, min_burst, bursts)
+            run = []
