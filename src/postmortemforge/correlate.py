@@ -122,3 +122,11 @@ def error_bursts(
 
 def _flush_burst(run: list[AlignedEvent], min_burst: int, out: list[Burst]) -> None:
     if len(run) >= min_burst:
+        out.append(Burst(run[0].ref_ts, run[-1].ref_ts, len(run), tuple(run)))
+
+
+def correlate(events: list[AlignedEvent], window_s: float = 300.0) -> list[Link]:
+    """Produce causal links between deploys, breaches, bursts, and recovery.
+
+    Only links whose gap falls within window_s are emitted. Links are returned in
+    a deterministic order: by cause timestamp, then relation name.
