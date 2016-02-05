@@ -15,3 +15,6 @@ from dataclasses import dataclass
 
 from .clockalign import AlignedEvent
 from .correlate import Burst, Interval, Link, breach_intervals, correlate, error_bursts
+
+
+@dataclass(frozen=True)
