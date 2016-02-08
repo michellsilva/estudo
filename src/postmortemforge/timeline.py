@@ -25,3 +25,7 @@ class Timeline:
     links: tuple[Link, ...]
     intervals: tuple[Interval, ...]
     bursts: tuple[Burst, ...]
+
+    @property
+    def origin_ts(self) -> float:
+        """Reference timestamp of the first event: the zero of the minute axis."""
