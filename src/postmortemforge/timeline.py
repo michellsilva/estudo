@@ -47,3 +47,15 @@ def build(events: list[AlignedEvent], window_s: float = 300.0) -> Timeline:
     """
     if not events:
         raise ValueError("cannot build a timeline from zero events")
+    ordered = sorted(events, key=lambda a: (a.ref_ts, a.source, a.event.prov.line_start))
+    return Timeline(
+        events=tuple(ordered),
+        links=tuple(correlate(ordered, window_s=window_s)),
+        intervals=tuple(breach_intervals(ordered)),
+        bursts=tuple(error_bursts(ordered)),
+    )
+
+
+def iso_utc(ref_ts: float) -> str:
+    """Format a reference timestamp as ISO8601 UTC, seconds precision."""
+    dt = _dt.datetime.fromtimestamp(ref_ts, tz=_dt.timezone.utc)
