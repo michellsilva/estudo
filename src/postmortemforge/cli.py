@@ -26,3 +26,14 @@ from . import __version__
 from . import sources as S
 from .clockalign import ClockModel, align, merge, with_anchor
 from .draft import build_draft
+from .report import render_ingest, render_svg, render_timeline
+from .timeline import build
+
+USAGE_ERROR = 2
+FINDINGS = 1
+CLEAN = 0
+
+
+def _parse_align_config(text: str, path: str) -> dict[str, ClockModel]:
+    """Parse the alignment config into per-source clock models.
+
