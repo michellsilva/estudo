@@ -47,3 +47,14 @@ def _parse_align_config(text: str, path: str) -> dict[str, ClockModel]:
         if not s or s.startswith("#"):
             continue
         parts = s.split()
+        source = parts[0]
+        offset = 0.0
+        skew = 0.0
+        anchor_raw = "first"
+        for tok in parts[1:]:
+            if "=" not in tok:
+                raise S.SourceError(f"{path}:{line_no}: field {tok!r} needs key=value")
+            key, val = tok.split("=", 1)
+            if key == "offset":
+                offset = float(val)
+            elif key == "skew":
