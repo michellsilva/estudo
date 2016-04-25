@@ -132,3 +132,14 @@ def _cmd_draft(args) -> int:
     tl = build(aligned, window_s=args.window)
     draft = build_draft(tl)
     sys.stdout.write(draft.render())
+    return FINDINGS if tl.links else CLEAN
+
+
+def _cmd_version(args) -> int:
+    sys.stdout.write(f"postmortemforge {__version__}\n")
+    return CLEAN
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="postmortemforge",
