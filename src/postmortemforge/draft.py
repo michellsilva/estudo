@@ -27,3 +27,13 @@ class Claim:
     """A single postmortem statement and the source spans that ground it."""
 
     text: str
+    sources: tuple[Provenance, ...]
+
+    def __post_init__(self) -> None:
+        if not self.sources:
+            raise UngroundedStatement(f"claim has no source span: {self.text!r}")
+
+    def render(self) -> str:
+        cites = ", ".join(p.span() for p in self.sources)
+        return f"- {self.text} [{cites}]"
+
