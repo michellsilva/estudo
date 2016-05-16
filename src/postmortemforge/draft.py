@@ -37,3 +37,14 @@ class Claim:
         cites = ", ".join(p.span() for p in self.sources)
         return f"- {self.text} [{cites}]"
 
+
+@dataclass(frozen=True)
+class Draft:
+    """A postmortem draft: titled sections, each a list of grounded claims."""
+
+    title: str
+    sections: tuple[tuple[str, tuple[Claim, ...]], ...]
+
+    def render(self) -> str:
+        lines: list[str] = [f"# {self.title}", ""]
+        for name, claims in self.sections:
