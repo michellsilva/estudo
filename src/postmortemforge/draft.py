@@ -59,3 +59,13 @@ class Draft:
 
 def _prov(*aligned_events) -> tuple[Provenance, ...]:
     return tuple(ae.event.prov for ae in aligned_events)
+
+
+def build_draft(timeline: Timeline) -> Draft:
+    """Compose a postmortem draft from a timeline.
+
+    Each claim is derived directly from concrete events or correlation links, and
+    is annotated with the provenance of those events. Sections with no grounded
+    claims render an explicit note rather than fabricated narrative.
+    """
+    summary: list[Claim] = []
