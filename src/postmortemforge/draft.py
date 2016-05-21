@@ -69,3 +69,14 @@ def build_draft(timeline: Timeline) -> Draft:
     claims render an explicit note rather than fabricated narrative.
     """
     summary: list[Claim] = []
+    timeline_claims: list[Claim] = []
+    cause_claims: list[Claim] = []
+    resolution_claims: list[Claim] = []
+
+    # Timeline section: one grounded claim per event.
+    for ae in timeline.events:
+        mins = timeline.minutes(ae.ref_ts)
+        stamp = iso_utc(ae.ref_ts)
+        timeline_claims.append(
+            Claim(
+                text=f"T+{mins:0.1f} min ({stamp}) {ae.source}: {ae.event.text}",
