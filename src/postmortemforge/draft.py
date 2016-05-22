@@ -112,3 +112,14 @@ def build_draft(timeline: Timeline) -> Draft:
         metric = interval.start_event.event.attrs.get("metric", "metric")
         threshold = interval.start_event.event.attrs.get("threshold")
         unit = interval.start_event.event.attrs.get("unit", "")
+        summary.append(
+            Claim(
+                text=(
+                    f"{metric} stayed past its threshold of {threshold:g}{unit} "
+                    f"from T+{start_m:0.1f} to T+{end_m:0.1f} min."
+                ),
+                sources=_prov(interval.start_event, interval.end_event),
+            )
+        )
+
+    # Error burst extent, grounded in the first and last error of the burst.
