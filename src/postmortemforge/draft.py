@@ -144,3 +144,14 @@ def build_draft(timeline: Timeline) -> Draft:
             metric = link.effect.event.attrs.get("metric", "metric")
             cause_claims.append(
                 Claim(
+                    text=(
+                        f"The deploy of {ref} was followed {gap:0.0f} s later by "
+                        f"{metric} crossing its threshold."
+                    ),
+                    sources=_prov(link.cause, link.effect),
+                )
+            )
+        elif link.relation == "deploy_to_burst":
+            ref = link.cause.event.attrs.get("ref", "")
+            cause_claims.append(
+                Claim(
