@@ -54,3 +54,15 @@ def render_timeline(timeline: Timeline) -> str:
 # Palette reason is documented in the SVG comment. Two core colours plus one
 # accent, derived from the incident domain: a calm slate for structure, a steady
 # teal for healthy signal, and a single amber accent marking the deploy that
+# started the incident, the one thing to look at first.
+_INK = "#1f2933"
+_MUTED = "#52606d"
+_LANE_BG = "#eef2f5"
+_TEAL = "#0f7d74"
+_AMBER = "#b06a00"
+_GRID = "#cbd2d9"
+_WHITE = "#ffffff"
+
+_LANES = ("deploy", "metric", "log")
+_LANE_LABEL = {"deploy": "deploy", "metric": "metric", "log": "logs"}
+
