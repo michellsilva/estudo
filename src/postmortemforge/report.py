@@ -31,3 +31,15 @@ def render_ingest(events: list[AlignedEvent]) -> str:
 def render_timeline(timeline: Timeline) -> str:
     """Render the timeline as minute-stamped lines plus the correlation links."""
     lines: list[str] = ["EVENTS"]
+    for ae in timeline.events:
+        mins = timeline.minutes(ae.ref_ts)
+        lines.append(
+            f"  T+{mins:6.1f}m  {ae.source:<7}  {ae.event.prov.span():<20}  {ae.event.text}"
+        )
+    lines.append("LINKS")
+    if not timeline.links:
+        lines.append("  (none)")
+    for link in timeline.links:
+        cm = timeline.minutes(link.cause.ref_ts)
+        em = timeline.minutes(link.effect.ref_ts)
+        lines.append(
