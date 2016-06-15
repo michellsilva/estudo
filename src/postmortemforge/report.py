@@ -20,3 +20,14 @@ def render_ingest(events: list[AlignedEvent]) -> str:
     Columns: reference ISO time, source, provenance span, label. This is the
     proof that reading and alignment happened, one event per line.
     """
+    lines: list[str] = []
+    for ae in events:
+        lines.append(
+            f"{iso_utc(ae.ref_ts)}  {ae.source:<7}  {ae.event.prov.span():<20}  {ae.event.text}"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def render_timeline(timeline: Timeline) -> str:
+    """Render the timeline as minute-stamped lines plus the correlation links."""
+    lines: list[str] = ["EVENTS"]
