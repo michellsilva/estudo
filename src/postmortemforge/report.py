@@ -77,3 +77,14 @@ def render_svg(timeline: Timeline) -> str:
     """Draw the aligned timeline as an information graphic.
 
     Layout: a horizontal minute axis, three source lanes stacked vertically, one
+    marker per event positioned by its minute offset, and connector lines for the
+    correlation links. All coordinates land on whole or half pixels.
+    """
+    left = 96.0
+    right_pad = 24.0
+    top = 72.0
+    lane_h = 64.0
+    lane_gap = 8.0
+    plot_w = 640.0
+    width = left + plot_w + right_pad
+    n_lanes = len(_LANES)
