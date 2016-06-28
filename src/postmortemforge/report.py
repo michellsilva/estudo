@@ -100,3 +100,14 @@ def render_svg(timeline: Timeline) -> str:
 
     parts: list[str] = []
     parts.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width:g} {height:g}" role="img" aria-labelledby="ttl dsc">')
+    parts.append(
+        "<!-- Palette reason: incident timeline. Slate ink for structure, teal for "
+        "healthy metric signal, one amber accent on the deploy that began the "
+        "incident, the first thing to read. Flat fills, no gradients. -->"
+    )
+    parts.append(f'<title id="ttl">Aligned incident timeline, {span_m:0.1f} minutes across three sources</title>')
+    parts.append(
+        '<desc id="dsc">Three horizontal lanes, deploy, metric, and logs, share a '
+        'minute axis measured from the first event. Markers show each event, and '
+        'connectors show correlated deploy, breach, and rollback relationships.</desc>'
+    )
