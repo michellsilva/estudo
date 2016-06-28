@@ -111,3 +111,15 @@ def render_svg(timeline: Timeline) -> str:
         'minute axis measured from the first event. Markers show each event, and '
         'connectors show correlated deploy, breach, and rollback relationships.</desc>'
     )
+    parts.append(f'<rect x="0" y="0" width="{width:g}" height="{height:g}" fill="{_WHITE}"/>')
+
+    # Title text.
+    parts.append(
+        f'<text x="{left:g}" y="36" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" '
+        f'font-size="17" font-weight="600" fill="{_INK}">Aligned incident timeline</text>'
+    )
+    parts.append(
+        f'<text x="{left:g}" y="56" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" '
+        f'font-size="12" fill="{_MUTED}">minutes from first event, reference clock</text>'
+    )
+
