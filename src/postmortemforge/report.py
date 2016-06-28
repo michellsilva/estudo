@@ -123,3 +123,14 @@ def render_svg(timeline: Timeline) -> str:
         f'font-size="12" fill="{_MUTED}">minutes from first event, reference clock</text>'
     )
 
+    # Lane backgrounds and labels.
+    for lane in _LANES:
+        y = lane_y[lane]
+        parts.append(
+            f'<rect x="{left:g}" y="{y:g}" width="{plot_w:g}" height="{lane_h:g}" '
+            f'rx="3" fill="{_LANE_BG}"/>'
+        )
+        parts.append(
+            f'<text x="{left - 12:g}" y="{y + lane_h / 2 + 4:g}" text-anchor="end" '
+            f'font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" '
+            f'font-size="12" fill="{_INK}">{escape(_LANE_LABEL[lane])}</text>'
