@@ -180,3 +180,14 @@ def render_svg(timeline: Timeline) -> str:
         is_deploy_start = ae.source == "deploy" and ae.event.attrs.get("action") == "deploy"
         fill = _AMBER if is_deploy_start else _TEAL
         r = 6.0 if is_deploy_start else 4.5
+        parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="{r:g}" fill="{fill}"/>')
+        label = _short_label(ae)
+        anchor, dx = _label_placement(x, left, plot_w)
+        parts.append(
+            f'<text x="{x + dx:g}" y="{y - 10:g}" text-anchor="{anchor}" '
+            f'font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" '
+            f'font-size="11" fill="{_INK}">{escape(label)}</text>'
+        )
+
+    parts.append("</svg>")
+    return "\n".join(parts) + "\n"
