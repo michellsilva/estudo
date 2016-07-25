@@ -60,3 +60,16 @@ class Event:
 
     raw_ts: float
     kind: str
+    text: str
+    attrs: dict = field(default_factory=dict)
+    prov: Provenance = None  # type: ignore[assignment]
+
+
+@dataclass(frozen=True)
+class MetricMeta:
+    """Declared metadata for a metric series, parsed from its header line."""
+
+    name: str
+    unit: str
+    threshold: float
+    direction: str  # above or below
