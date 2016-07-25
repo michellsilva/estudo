@@ -110,3 +110,16 @@ def read_logs(text: str, path: str) -> list[Event]:
     starting with # are skipped. The message is kept verbatim as the label.
     """
     events: list[Event] = []
+    for line_no, line in _iter_lines(text):
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        parts = s.split(None, 2)
+        if len(parts) < 2:
+            raise SourceError(f"{path}:{line_no}: log line needs a timestamp and level")
+        ts = _parse_ts(parts[0], path, line_no)
+        level = parts[1].upper()
+        message = parts[2] if len(parts) == 3 else ""
+        events.append(
+            Event(
+                raw_ts=ts,
