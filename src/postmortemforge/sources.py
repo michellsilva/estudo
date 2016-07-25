@@ -85,3 +85,16 @@ def _parse_ts(token: str, path: str, line_no: int) -> float:
 
     Accepts a trailing Z or an explicit +00:00 offset. Rejects anything else so
     a malformed export fails loudly rather than silently misaligning.
+    """
+    t = token
+    if t.endswith("Z"):
+        t = t[:-1] + "+00:00"
+    try:
+        dt = _dt.datetime.fromisoformat(t)
+    except ValueError as exc:
+        raise SourceError(f"{path}:{line_no}: bad timestamp {token!r}") from exc
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=_dt.timezone.utc)
+    return dt.timestamp()
+
+
