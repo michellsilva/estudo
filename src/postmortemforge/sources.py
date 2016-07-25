@@ -98,3 +98,15 @@ def _parse_ts(token: str, path: str, line_no: int) -> float:
     return dt.timestamp()
 
 
+def _iter_lines(text: str) -> Iterator[tuple[int, str]]:
+    for i, line in enumerate(text.splitlines(), start=1):
+        yield i, line
+
+
+def read_logs(text: str, path: str) -> list[Event]:
+    """Parse application log lines into Event records.
+
+    Format per line: `<iso8601> <LEVEL> <message>`. Blank lines and lines
+    starting with # are skipped. The message is kept verbatim as the label.
+    """
+    events: list[Event] = []
