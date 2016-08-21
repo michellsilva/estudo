@@ -199,3 +199,15 @@ def _parse_metric_header(line: str, path: str, line_no: int) -> MetricMeta:
             raise SourceError(f"{path}:{line_no}: metric header missing {required}")
     if fields["direction"] not in ("above", "below"):
         raise SourceError(f"{path}:{line_no}: direction must be above or below")
+    try:
+        threshold = float(fields["threshold"])
+    except ValueError as exc:
+        raise SourceError(f"{path}:{line_no}: bad threshold {fields['threshold']!r}") from exc
+    return MetricMeta(name=name, unit=fields["unit"], threshold=threshold, direction=fields["direction"])
+
+
+def read_deploy(text: str, path: str) -> list[Event]:
+    """Parse a deploy record into Event records.
+
+    Format per line: `<iso8601> <action> ref=<ref>` where action is deploy or
+    rollback. The ref (a commit or version) is kept in attrs so the timeline can
