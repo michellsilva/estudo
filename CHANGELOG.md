@@ -16,3 +16,9 @@ Keep a Changelog, and this project adheres to semantic versioning.
   bursts, plus rollback to recovery detection.
 - An ordered timeline model measured in minutes from the first event.
 - A postmortem draft writer where every statement cites the exact source span it
+  came from, and ungrounded statements are omitted.
+- CLI subcommands: ingest, timeline, draft, version.
+- Sample incident fixtures with deliberately offset clocks, and a test suite
+  asserting the alignment.
+
+<!-- draft note 101 -->
