@@ -37,3 +37,15 @@ class TestSources(unittest.TestCase):
     def test_metric_header_and_breach_flag(self):
         text = (
             "# metric latency_p99_ms unit=ms threshold=400 direction=above\n"
+            "2026-03-01T08:00:00Z 100\n"
+            "2026-03-01T08:00:30Z 500\n"
+        )
+        meta, events = S.read_metric(text, "metric.txt")
+        self.assertEqual(meta.name, "latency_p99_ms")
+        self.assertEqual(meta.threshold, 400.0)
+        self.assertFalse(events[0].attrs["breached"])
+        self.assertTrue(events[1].attrs["breached"])
+        self.assertEqual(events[1].prov.line_start, 3)
+
+    def test_deploy_actions(self):
+        text = "2026-03-01T08:00:00Z deploy ref=v1\n2026-03-01T08:05:00Z rollback ref=v0\n"
