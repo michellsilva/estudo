@@ -60,3 +60,15 @@ class TestSources(unittest.TestCase):
 
     def test_bad_direction_raises(self):
         with self.assertRaises(S.SourceError):
+            S.read_metric("# metric m unit=ms threshold=1 direction=sideways\n", "m.txt")
+
+
+class TestClockAlign(unittest.TestCase):
+    def test_offset_only(self):
+        raw = S._parse_ts("2026-03-01T08:00:00Z", "x", 1)
+        model = ClockModel("log", offset_s=45.0, skew_s_per_s=0.0, anchor_ts=raw)
+        self.assertAlmostEqual(model.to_reference(raw), raw + 45.0)
+
+    def test_skew_accumulates_from_anchor(self):
+        anchor = S._parse_ts("2026-03-01T08:00:00Z", "x", 1)
+        later = anchor + 600.0  # ten minutes past the anchor
