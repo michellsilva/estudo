@@ -49,3 +49,14 @@ class TestSources(unittest.TestCase):
 
     def test_deploy_actions(self):
         text = "2026-03-01T08:00:00Z deploy ref=v1\n2026-03-01T08:05:00Z rollback ref=v0\n"
+        events = S.read_deploy(text, "deploy.txt")
+        self.assertEqual(events[0].attrs["action"], "deploy")
+        self.assertEqual(events[0].attrs["ref"], "v1")
+        self.assertEqual(events[1].attrs["action"], "rollback")
+
+    def test_bad_timestamp_raises(self):
+        with self.assertRaises(S.SourceError):
+            S.read_logs("not-a-time INFO x\n", "logs.txt")
+
+    def test_bad_direction_raises(self):
+        with self.assertRaises(S.SourceError):
