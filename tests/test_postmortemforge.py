@@ -131,3 +131,15 @@ class TestSampleAlignment(unittest.TestCase):
         # Without alignment the metric would appear 90 s late; the skew and offset
         # move its first breach ahead of a log line it truly precedes. Prove that
         # the reference order differs from the raw order for at least one pair.
+        _, metric_events = S.read_metric(S.read_file(_sample("metric.txt")), "metric.txt")
+        met_first_raw = min(e.raw_ts for e in metric_events)
+        naive = sorted(metric_events, key=lambda e: e.raw_ts)
+        aligned = align(metric_events, with_anchor(ClockModel("metric", -90.0, 0.02), met_first_raw))
+        # Raw first sample time and aligned first sample time differ by ~90 s.
+        self.assertNotEqual(naive[0].raw_ts, aligned[0].ref_ts)
+        self.assertAlmostEqual(aligned[0].ref_ts, naive[0].raw_ts - 90.0, places=3)
+
+
+class TestCorrelate(unittest.TestCase):
+    def _load_aligned(self):
+        log_events = S.read_logs(S.read_file(_sample("logs.txt")), "logs.txt")
