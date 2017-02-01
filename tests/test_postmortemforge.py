@@ -120,3 +120,14 @@ class TestSampleAlignment(unittest.TestCase):
         met_model = with_anchor(ClockModel("metric", -90.0, 0.02), met_first_raw)
         met_aligned = align(metric_events, met_model)
         self.assertEqual(iso_utc(met_aligned[0].ref_ts), "2026-03-01T08:00:00Z")
+
+        # A metric sample 300 s past the anchor gains 0.02 * 300 = 6 s of skew.
+        # Raw 08:06:30 is 300 s after the 08:01:30 anchor:
+        #   ref = raw - 90 + 6 = 08:06:30 - 90 + 6 = 08:05:06.
+        target = [e for e in met_aligned if e.event.prov.line_start == 15]
+        self.assertEqual(iso_utc(target[0].ref_ts), "2026-03-01T08:05:06Z")
+
+    def test_alignment_reorders_relative_to_naive_stream(self):
+        # Without alignment the metric would appear 90 s late; the skew and offset
+        # move its first breach ahead of a log line it truly precedes. Prove that
+        # the reference order differs from the raw order for at least one pair.
