@@ -190,3 +190,15 @@ class TestDraft(unittest.TestCase):
 
     def test_every_rendered_claim_line_has_a_citation(self):
         log_events = S.read_logs(S.read_file(_sample("logs.txt")), "logs.txt")
+        _, metric_events = S.read_metric(S.read_file(_sample("metric.txt")), "metric.txt")
+        deploy_events = S.read_deploy(S.read_file(_sample("deploy.txt")), "deploy.txt")
+        lf = min(e.raw_ts for e in log_events)
+        mf = min(e.raw_ts for e in metric_events)
+        aligned = merge(
+            align(log_events, with_anchor(ClockModel("log", 45.0, 0.0), lf)),
+            align(metric_events, with_anchor(ClockModel("metric", -90.0, 0.02), mf)),
+            align(deploy_events, ClockModel("deploy", 0.0, 0.0, 0.0)),
+        )
+        tl = build(aligned)
+        draft = build_draft(tl)
+        rendered = draft.render()
