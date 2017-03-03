@@ -214,3 +214,15 @@ class TestDraft(unittest.TestCase):
         deploy_events = S.read_deploy(S.read_file(_sample("deploy.txt")), "deploy.txt")
         lf = min(e.raw_ts for e in log_events)
         mf = min(e.raw_ts for e in metric_events)
+
+        def render_once():
+            aligned = merge(
+                align(log_events, with_anchor(ClockModel("log", 45.0, 0.0), lf)),
+                align(metric_events, with_anchor(ClockModel("metric", -90.0, 0.02), mf)),
+                align(deploy_events, ClockModel("deploy", 0.0, 0.0, 0.0)),
+            )
+            return build_draft(build(aligned)).render()
+
+        self.assertEqual(render_once(), render_once())
+
+
