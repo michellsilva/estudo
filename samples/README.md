@@ -14,3 +14,8 @@ On the reference clock:
 - T+6.0 min: a rollback to v2.4.0.
 - shortly after: the metric returns below threshold and the errors stop.
 
+## The three clocks
+
+Each source is written on its own clock, and the timestamps in the files are the
+raw, unaligned values. The alignment config, `align.txt`, declares how each
+projects onto the reference clock:
