@@ -6,3 +6,5 @@
 <title id="ttl">postmortemforge logo</title>
 <desc id="dsc">A three lane timeline mark above the wordmark postmortemforge, with the deploy morpheme split in colour. The amber dot marks a deploy event on the top lane.</desc>
 <rect x="0" y="0" width="240" height="240" fill="#ffffff"/>
+<!-- Mark: three source lanes, each a rule with event dots. One amber deploy dot. -->
+<g>
