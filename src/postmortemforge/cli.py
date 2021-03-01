@@ -153,3 +153,28 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_timeline = sub.add_parser("timeline", help="build the correlated timeline")
     _add_source_args(p_timeline)
+    p_timeline.add_argument("--window", type=float, default=300.0, help="correlation window in seconds")
+    p_timeline.add_argument("--svg", help="write the timeline SVG to this path instead of text")
+    p_timeline.set_defaults(func=_cmd_timeline)
+
+    p_draft = sub.add_parser("draft", help="write the cited postmortem draft")
+    _add_source_args(p_draft)
+    p_draft.add_argument("--window", type=float, default=300.0, help="correlation window in seconds")
+    p_draft.set_defaults(func=_cmd_draft)
+
+    p_version = sub.add_parser("version", help="print the version")
+    p_version.set_defaults(func=_cmd_version)
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    try:
+        return args.func(args)
+    except S.SourceError as exc:
+        sys.stderr.write(f"error: {exc}\n")
+        return USAGE_ERROR
+    except (FileNotFoundError, ValueError) as exc:
+        sys.stderr.write(f"error: {exc}\n")
