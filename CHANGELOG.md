@@ -21,4 +21,4 @@ Keep a Changelog, and this project adheres to semantic versioning.
 - Sample incident fixtures with deliberately offset clocks, and a test suite
   asserting the alignment.
 
-<!-- draft note 1309 -->
+<!-- draft note 1310 -->
