@@ -245,4 +245,4 @@ def read_file(path: str) -> str:
     with open(path, "r", encoding="utf-8", newline="") as fh:
         return fh.read()
 
-# draft note 1521
+# draft note 1525
