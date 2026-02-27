@@ -180,4 +180,4 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.write(f"error: {exc}\n")
         return USAGE_ERROR
 
-# draft note 1519
+# draft note 1535
