@@ -450,3 +450,57 @@ postmortemforge/
 ```
 
 ## Glossary
+
+| Term                | Meaning                                                                       |
+| ------------------- | ----------------------------------------------------------------------------- |
+| reference clock     | The single clock all events are projected onto. In the sample, the deploy clock. |
+| offset              | Constant shift in seconds applied to a source clock (ahead or behind).        |
+| skew                | Rate error in seconds per second; drift that accumulates from the anchor.     |
+| anchor              | The raw timestamp where a source last agreed with the reference.              |
+| provenance          | A source file path and 1-based inclusive line span for one event.             |
+| breach interval     | The span from first to last metric sample past the threshold.                 |
+| error burst         | A run of ERROR log events, each within the burst gap of the last.             |
+| link                | A correlation between two events whose gap falls inside the window.           |
+| claim               | A draft statement that cannot be constructed without at least one provenance. |
+| window              | The maximum aligned gap, in seconds, for two events to be linked (default 300). |
+
+## Verification
+
+Run the test suite from the project root:
+
+```
+python -m unittest discover -s tests -v
+```
+
+The suite has 22 tests and passes clean:
+
+```
+Ran 22 tests in 0.043s
+
+OK
+```
+
+What they cover: the three source readers and their provenance and rejection of bad input
+(`TestSources`); the offset and skew math including skew accumulating from the anchor and
+deterministic merge order (`TestClockAlign`); the sample offsets projecting to the exact
+expected reference times, including `08:05:06Z` for the skewed sample (`TestSampleAlignment`);
+the single breach interval, the five error burst, and all three link relations with their
+endpoint provenance (`TestCorrelate`); the grounding guarantee, the citation on every
+rendered line, and byte identical output across runs (`TestDraft`); and the CLI exit
+codes for findings, version, and a missing file (`TestCli`).
+
+## Roadmap
+
+Directions under consideration, without dates:
+
+- A `diff` mode to compare two timeline runs so a re-run after a fix is reviewable in git.
+- Multiple metric series in one file, with per series thresholds.
+- An optional inferred offset mode that proposes an alignment for a human to confirm,
+  keeping the declared config as the source of truth.
+- Ranking or grouping of links when an incident produces many, without claiming causation.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+<!-- draft note 1541 -->
