@@ -61,4 +61,4 @@ def iso_utc(ref_ts: float) -> str:
     dt = _dt.datetime.fromtimestamp(ref_ts, tz=_dt.timezone.utc)
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-# draft note 1534
+# draft note 1540
