@@ -221,5 +221,3 @@ def _label_placement(x: float, left: float, plot_w: float) -> tuple[str, float]:
     if x < left + 24:
         return "start", 6.0
     return "middle", 0.0
-
-# draft note 1524
