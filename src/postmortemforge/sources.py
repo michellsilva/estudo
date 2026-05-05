@@ -244,5 +244,3 @@ def read_deploy(text: str, path: str) -> list[Event]:
 def read_file(path: str) -> str:
     with open(path, "r", encoding="utf-8", newline="") as fh:
         return fh.read()
-
-# draft note 1546
