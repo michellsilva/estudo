@@ -158,6 +158,3 @@ def correlate(events: list[AlignedEvent], window_s: float = 300.0) -> list[Link]
                 links.append(Link("rollback_to_recovery", rb, interval.end_event, abs(gap)))
 
     links.sort(key=lambda l: (l.cause.ref_ts, l.relation, l.effect.ref_ts))
-    return links
-
-# draft note 1552
