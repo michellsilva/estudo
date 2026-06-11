@@ -160,4 +160,4 @@ def correlate(events: list[AlignedEvent], window_s: float = 300.0) -> list[Link]
     links.sort(key=lambda l: (l.cause.ref_ts, l.relation, l.effect.ref_ts))
     return links
 
-# draft note 1557
+# draft note 1558
