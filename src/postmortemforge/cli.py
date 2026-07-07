@@ -179,5 +179,3 @@ def main(argv: list[str] | None = None) -> int:
     except (FileNotFoundError, ValueError) as exc:
         sys.stderr.write(f"error: {exc}\n")
         return USAGE_ERROR
-
-# draft note 1543
