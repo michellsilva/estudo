@@ -20,5 +20,3 @@ Keep a Changelog, and this project adheres to semantic versioning.
 - CLI subcommands: ingest, timeline, draft, version.
 - Sample incident fixtures with deliberately offset clocks, and a test suite
   asserting the alignment.
-
-<!-- draft note 1515 -->
